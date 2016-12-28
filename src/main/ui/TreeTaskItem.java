@@ -1,6 +1,5 @@
 package main.ui;
 
-import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import javafx.scene.control.TreeItem;
 

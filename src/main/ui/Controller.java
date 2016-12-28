@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -84,6 +85,13 @@ public class Controller implements Initializable {
         ToggleGroup group2 = new ToggleGroup();
         group2.getToggles().addAll(toggleSuccess, toggleFailed);
         group2.selectToggle(toggleSuccess);
+
+        treeItemName.textProperty().addListener(((observable, oldValue, newValue) -> {
+            buttonAdd.setDisable(newValue.isEmpty());
+            if(!newValue.isEmpty()) {
+                treeItemName.setText(newValue.replace(" ", ""));
+            }
+        }));
 
         treeView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -177,6 +185,10 @@ public class Controller implements Initializable {
         toggleSuccess.setDisable(true);
         toggleLeaf.setDisable(true);
 
+        treeView.setRoot(new TreeTaskItem("Root", "This is the root node."
+                + System.lineSeparator()
+                + "\nAdd children of this branch using the settings to the right."));
+
     }
 
 
@@ -195,6 +207,7 @@ public class Controller implements Initializable {
                         } else {
                             TreeTaskItem item;
                             TreeTaskItem parent = (TreeTaskItem) selected;
+
 
                             if(toggleSuccess.isSelected()) {
                                 if(parent.getSuccess() != null) {
@@ -232,8 +245,13 @@ public class Controller implements Initializable {
                 if (treeView.getRoot().equals(selected)) {
                     treeView.setRoot(null);
                 } else {
-                    TreeItem<String> parent = selected.getParent();
+                    TreeTaskItem parent = (TreeTaskItem) selected.getParent();
                     if (parent != null) {
+                        if(Objects.equals(parent.getFailed(), selected)) {
+                            parent.setFailed(null);
+                        } else if (Objects.equals(parent.getSuccess(), selected)) {
+                            parent.setSuccess(null);
+                        }
                         parent.getChildren().remove(selected);
                     }
                 }

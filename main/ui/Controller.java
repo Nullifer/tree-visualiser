@@ -177,6 +177,10 @@ public class Controller implements Initializable {
         toggleSuccess.setDisable(true);
         toggleLeaf.setDisable(true);
 
+        treeView.setRoot(new TreeTaskItem("Root", "This is the root node."
+                + System.lineSeparator()
+                + "\nAdd children of this branch using the settings to the right."));
+
     }
 
 

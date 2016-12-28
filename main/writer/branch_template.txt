@@ -1,0 +1,26 @@
+package please.add.your.pkg;
+
+import com.runemate.game.api.script.framework.tree.BranchTask;
+import com.runemate.game.api.script.framework.tree.TreeTask;
+
+/**
+ * NOTES:
+ {$NOTES}
+ */
+public class {$NAME} extends BranchTask {
+
+    @Override
+    public boolean validate() {
+        return false;
+    }
+
+    @Override
+    public TreeTask failureTask() {
+        return {$FAIL};
+    }
+
+    @Override
+    public TreeTask successTask() {
+        return {$SUCCESS};
+    }
+}
